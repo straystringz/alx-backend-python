@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contains a single function that returns a string representation of a floating point"""
+"""Contains a single function that returns a string rep. of a float"""
 
 
 def to_str(n: float) -> str:
