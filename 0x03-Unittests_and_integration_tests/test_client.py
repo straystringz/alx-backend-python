@@ -10,7 +10,7 @@ from fixtures import TEST_PAYLOAD
 
 class TestGithubOrgClient(unittest.TestCase):
     """
-    Test_ the GithubOrgClient class methods
+    Test the GithubOrgClient class methods
     """
     @parameterized.expand([
         ("google"),
@@ -19,7 +19,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.get_json', return_value={"payload": True})
     def test_org(self, org, mock_org):
         """
-        Test_ TestGithubOrgClient's org method
+        Test TestGithubOrgClient's org method
         Args:
             org (str): organisation's name
         """
@@ -30,8 +30,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
     def test_public_repos_url(self):
         """
-        Test_ TestGithubOrgClient's _public_repos_url method works
-        as_ expected.
+        Test TestGithubOrgClient's _public_repos_url method works
+        as expected.
         """
         with patch.object(GithubOrgClient,
                           'org',
@@ -47,7 +47,7 @@ class TestGithubOrgClient(unittest.TestCase):
                                             {'name': 'alx'}])
     def test_public_repos(self, mock_repo):
         """
-        Test_ GithubOrgClient's public_repos method
+        Test GithubOrgClient's public_repos method
         """
         with patch.object(GithubOrgClient,
                           '_public_repos_url',
@@ -67,10 +67,10 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_has_license(self, repo, license_key, expected):
         """
-        Test_ GithubOrgClient's has_license method
-        Args_:
-            repo (dict): dictionary_
-            license_key_ (str): license in the repo dict
+        Test GithubOrgClient's has_license method
+        Args:
+            repo (dict): dictionary
+            license_key (str): license in the repo dict
         """
         test_instance = GithubOrgClient('holberton')
         license_available = test_instance.has_license(repo, license_key)
@@ -79,12 +79,12 @@ class TestGithubOrgClient(unittest.TestCase):
 
 def requests_get(*args, **kwargs):
     """
-    Function_ that mocks requests.get function
-    Returns_ the correct json data based on the given input url
+    Function that mocks requests.get function
+    Returns the correct json data based on the given input url
     """
     class MockResponse:
         """
-        Mock_ response
+        Mock response
         """
         def __init__(self, json_data):
             self.json_data = json_data
@@ -105,13 +105,13 @@ def requests_get(*args, **kwargs):
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
-    Integration_ test for the GithubOrgClient.public_repos method
+    Integration test for the GithubOrgClient.public_repos method
     """
     @classmethod
     def setUpClass(cls):
         """
-        Set_ up function for TestIntegrationGithubOrgClient class
-        Sets_ up a patcher to be used in the class methods
+        Set up function for TestIntegrationGithubOrgClient class
+        Sets up a patcher to be used in the class methods
         """
         cls.get_patcher = patch('utils.requests.get', side_effect=requests_get)
         cls.get_patcher.start()
@@ -120,22 +120,21 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """
-        Tear_ down resources set up for class tests.
-        Stops_ the patcher that had been started
+        Tear down resources set up for class tests.
+        Stops the patcher that had been started
         """
         cls.get_patcher.stop()
 
     def test_public_repos(self):
         """
-        Test_ public_repos method without license
+        Test public_repos method without license
         """
         self.assertEqual(self.client.public_repos(), self.expected_repos)
 
     def test_public_repos_with_license(self):
         """
-        Test_ public_repos method with license
+        Test public_repos method with license
         """
         self.assertEqual(
             self.client.public_repos(license="apache-2.0"),
             self.apache2_repos)
-
